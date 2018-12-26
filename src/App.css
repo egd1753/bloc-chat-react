@@ -30,3 +30,23 @@
     transform: rotate(360deg);
   }
 }
+
+
+
+.LColumn-RoomList {
+  float: left;
+  width: 150px;
+  height: 400px;
+  border-color: black;
+  border-width: 2px; 
+  border-style: solid;
+  padding-top: 15px;
+}
+
+.RColum-MessageArea {
+  height: 415px;
+  border-style: solid;
+  border-color: black;
+  border-width: 2px;
+  margin-left: 160px;
+}
