@@ -6,9 +6,9 @@ class RoomList extends Component {
         super(props);
 
         this.state = {
-            rooms: []
+            rooms: [],
+            newRoomName: ''
         };
-
     this.roomsRef = this.props.firebase.database().ref('rooms'); 
     }
 
@@ -19,6 +19,18 @@ class RoomList extends Component {
             room.key = snapshot.key;
             this.setState({ rooms: this.state.rooms.concat( room ) })
         });
+    }
+
+    handleChange(e) {
+        this.setState({ newRoomName: e.target.value });
+    }
+
+    handleCreateRoom(e) {
+        e.preventDefault();
+        if(!this.state.newRoomName) { return }
+        const newRoom = { name: this.state.newRoomName };
+        this.roomsRef.push(newRoom);
+        this.setState({ newRoomName: '' });
     }
 
  
@@ -34,15 +46,23 @@ class RoomList extends Component {
                             {
                                 this.state.rooms.map( (room, index) => 
                                     <li
-                                        key={index}
+                                        key={ index }
                                         className='room'
                                     >
-                                    {room.name}
+                                    { room.name }
                                     </li>
                                 )
                             }
                         </ul> 
                     </nav> 
+                    <form onSubmit={ (e) => this.handleCreateRoom(e) }>
+                        <input 
+                            type='text' 
+                                value={ this.state.newRoomName } 
+                                onChange={ (e) => this.handleChange(e) }
+                            />
+                        <input type='submit' />
+                    </form>
                 </div>
                 <div className='RColum-MessageArea'>
                     <header className='MessageHeader'>
