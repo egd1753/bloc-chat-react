@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 
-
 class RoomList extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
             rooms: [],
-            newRoomName: ''
+            newRoomName: '',
         };
     this.roomsRef = this.props.firebase.database().ref('rooms'); 
+    
     }
 
     
@@ -33,7 +33,10 @@ class RoomList extends Component {
         this.setState({ newRoomName: '' });
     }
 
- 
+    handleRoomClick(room) {
+        this.props.setActiveRoom(room);
+    }
+
     render() {
         return (
             <section className='RoomListComponent'>
@@ -41,6 +44,7 @@ class RoomList extends Component {
                     <header>
                         <h2>Bloc Chat</h2>
                     </header>
+
                     <nav>
                         <ul>
                             {
@@ -48,6 +52,7 @@ class RoomList extends Component {
                                     <li
                                         key={ index }
                                         className='room'
+                                        onClick={ () => this.handleRoomClick(room) }
                                     >
                                     { room.name }
                                     </li>
@@ -55,6 +60,7 @@ class RoomList extends Component {
                             }
                         </ul> 
                     </nav> 
+
                     <form onSubmit={ (e) => this.handleCreateRoom(e) }>
                         <input 
                             type='text' 
@@ -63,13 +69,13 @@ class RoomList extends Component {
                             />
                         <input type='submit' />
                     </form>
+
                 </div>
+
                 <div className='RColum-MessageArea'>
                     <header className='MessageHeader'>
-                        <h1></h1>
                     </header>
                     <main className='Messages'>
-
                     </main>
                 </div>
             </section>
