@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+
 class RoomList extends Component {
     constructor(props) {
         super(props);
@@ -8,16 +9,16 @@ class RoomList extends Component {
             rooms: [],
             newRoomName: '',
         };
-    this.roomsRef = this.props.firebase.database().ref('rooms'); 
+        this.roomsRef = this.props.firebase.database().ref('rooms'); 
     
     }
 
     
     componentDidMount() {
         this.roomsRef.on('child_added', snapshot => {
-            const room = snapshot.val();
-            room.key = snapshot.key;
-            this.setState({ rooms: this.state.rooms.concat( room ) })
+            const roomObject = snapshot.val();
+            roomObject.key = snapshot.key;
+            this.setState({ rooms: this.state.rooms.concat( roomObject ) })
         });
     }
 
@@ -32,9 +33,10 @@ class RoomList extends Component {
         this.roomsRef.push(newRoom);
         this.setState({ newRoomName: '' });
     }
-
+    
     handleRoomClick(room) {
         this.props.setActiveRoom(room);
+        console.log("RoomList.js says the activeRoom.key is:", this.props.activeRoom.key);
     }
 
     render() {

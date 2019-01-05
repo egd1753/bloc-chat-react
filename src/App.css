@@ -38,3 +38,8 @@
   border-width: 2px;
   margin-left: 160px;
 }
+
+li:hover {
+  background-color: grey;
+}
+
