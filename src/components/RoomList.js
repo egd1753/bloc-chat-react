@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
 
+/*
+const liStyle = {
+    backgroundColor : 'lightblue'
+}
+*/
 
 class RoomList extends Component {
     constructor(props) {
@@ -36,8 +41,16 @@ class RoomList extends Component {
     
     handleRoomClick(room) {
         this.props.setActiveRoom(room);
+
         console.log("RoomList.js says the activeRoom.key is:", this.props.activeRoom.key);
     }
+/*
+    handleActiveRoomHighlight(room) {
+        
+    }
+*/
+
+    
 
     render() {
         return (
@@ -55,6 +68,7 @@ class RoomList extends Component {
                                         key={ index }
                                         className='room'
                                         onClick={ () => this.handleRoomClick(room) }
+                                        
                                     >
                                     { room.name }
                                     </li>
@@ -67,7 +81,7 @@ class RoomList extends Component {
                         <input 
                             type='text' 
                                 value={ this.state.newRoomName } 
-                                onChange={ (e) => this.handleChange(e) }
+                                onChange={ (room) => this.handleChange(room) }
                             />
                         <input type='submit' />
                     </form>
@@ -78,6 +92,7 @@ class RoomList extends Component {
                     <header className='MessageHeader'>
                     </header>
                     <main className='Messages'>
+                
                     </main>
                 </div>
             </section>
