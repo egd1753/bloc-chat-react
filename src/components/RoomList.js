@@ -41,8 +41,6 @@ class RoomList extends Component {
     
     handleRoomClick(room) {
         this.props.setActiveRoom(room);
-
-        console.log("RoomList.js says the activeRoom.key is:", this.props.activeRoom.key);
     }
 /*
     handleActiveRoomHighlight(room) {
@@ -68,7 +66,6 @@ class RoomList extends Component {
                                         key={ index }
                                         className='room'
                                         onClick={ () => this.handleRoomClick(room) }
-                                        
                                     >
                                     { room.name }
                                     </li>

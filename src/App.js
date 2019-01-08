@@ -29,7 +29,6 @@ class App extends Component {
    
   setActiveRoom(room) {
     this.setState({ activeRoom: room });
-    console.log("App.js says activeRoom key is", this.state.activeRoom.key);
   }
 
   render() {
