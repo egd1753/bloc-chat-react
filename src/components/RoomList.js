@@ -66,7 +66,6 @@ class RoomList extends Component {
                 </div>
                 <div className='RColum-MessageArea'>
                     <header className='MessageHeader'>
-                        <h1></h1>
                     </header>
                     <main className='Messages'>
 
