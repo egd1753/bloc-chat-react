@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
 
+/*
+const liStyle = {
+    backgroundColor : 'lightblue'
+}
+*/
 
 class RoomList extends Component {
     constructor(props) {
@@ -7,17 +12,18 @@ class RoomList extends Component {
 
         this.state = {
             rooms: [],
-            newRoomName: ''
+            newRoomName: '',
         };
-    this.roomsRef = this.props.firebase.database().ref('rooms'); 
+        this.roomsRef = this.props.firebase.database().ref('rooms'); 
+    
     }
 
     
     componentDidMount() {
         this.roomsRef.on('child_added', snapshot => {
-            const room = snapshot.val();
-            room.key = snapshot.key;
-            this.setState({ rooms: this.state.rooms.concat( room ) })
+            const roomObject = snapshot.val();
+            roomObject.key = snapshot.key;
+            this.setState({ rooms: this.state.rooms.concat( roomObject ) })
         });
     }
 
@@ -32,8 +38,18 @@ class RoomList extends Component {
         this.roomsRef.push(newRoom);
         this.setState({ newRoomName: '' });
     }
+    
+    handleRoomClick(room) {
+        this.props.setActiveRoom(room);
+    }
+/*
+    handleActiveRoomHighlight(room) {
+        
+    }
+*/
 
- 
+    
+
     render() {
         return (
             <section className='RoomListComponent'>
@@ -41,6 +57,7 @@ class RoomList extends Component {
                     <header>
                         <h2>Bloc Chat</h2>
                     </header>
+
                     <nav>
                         <ul>
                             {
@@ -48,6 +65,7 @@ class RoomList extends Component {
                                     <li
                                         key={ index }
                                         className='room'
+                                        onClick={ () => this.handleRoomClick(room) }
                                     >
                                     { room.name }
                                     </li>
@@ -55,20 +73,23 @@ class RoomList extends Component {
                             }
                         </ul> 
                     </nav> 
+
                     <form onSubmit={ (e) => this.handleCreateRoom(e) }>
                         <input 
                             type='text' 
                                 value={ this.state.newRoomName } 
-                                onChange={ (e) => this.handleChange(e) }
+                                onChange={ (room) => this.handleChange(room) }
                             />
                         <input type='submit' />
                     </form>
+
                 </div>
+
                 <div className='RColum-MessageArea'>
                     <header className='MessageHeader'>
                     </header>
                     <main className='Messages'>
-
+                
                     </main>
                 </div>
             </section>
