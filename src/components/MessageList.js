@@ -6,6 +6,7 @@ class MessageList extends Component {
 
         this.state = {
             allMessages: [],
+            newMessage: ''
         };
         this.messagesRef = this.props.firebase.database().ref('Messages');
     }
@@ -16,6 +17,18 @@ class MessageList extends Component {
             messageObject.key = snapshot.key;
             this.setState({ allMessages: this.state.allMessages.concat( messageObject ) })
         });
+    }
+
+    handleChange(e) {
+        this.setState({ newMessage: e.target.value });
+    }
+
+    handleCreateMessage(e) {
+        e.preventDefault();
+        if(!this.state.newMessage) { return }
+        const newMessageObject = { username: this.props.currentUser.displayName, content: this.state.newMessage, sentAt: "9:20", roomId: this.props.activeRoom };
+        this.messagesRef.push(newMessageObject);
+        this.setState({ newMessage: '' });
     }
 
 
@@ -44,8 +57,18 @@ class MessageList extends Component {
                             }
                         </tbody>
                     </table>
-                    
                 </main>
+
+                <form onSubmit={ (e) => this.handleCreateMessage(e) }>
+                        <input 
+                            type='text'  
+                            onChange={ (message) => this.handleChange(message) }
+                        />
+                        <input 
+                            type='submit' 
+                            value='Send'
+                        />
+                    </form>
             </section>
         )
     }
